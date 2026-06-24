@@ -1,9 +1,9 @@
 {
   "repoName": "Bypass Restrictions Repo",
-  "author": "Developer",
+  "author": "yaser275",
   "tweaks": [
     {
-      "id": "com.developer.bypassfilter",
+      "id": "com.yaser275.bypassfilter",
       "name": "Web & System Bypass",
       "description": "تخطي قيود فلاتر الويب والمواقع المحجوبة وقفل النظام",
       "version": "1.0.0",
