@@ -1,4 +1,4 @@
-// كود أداة Cyanide لتخطي فلاتر الويب والقيود المدارة
+// كود Cyanide لتخطي فلاتر الويب والقيود المدارة للحساب yaser275
 if (ObjC.available) {
     try {
         var mcConnection = ObjC.classes.MCProfileConnection;
@@ -11,12 +11,10 @@ if (ObjC.available) {
                 }
             });
 
-            // 2. فحص وتخطي المفاتيح المحددة في ملف تفضيلات المحتوى (com.apple.webcontentfilter)
+            // 2. تخطي المفاتيح المحددة في ملف تفضيلات المحتوى
             Interceptor.attach(mcConnection['- isRestrictionBoolValueSet:'].implementation, {
                 onEnter: function (args) {
-                    var currentKey = new ObjC.Object(args[2]).toString(); // قراءة المفتاح الممرر للنظام
-                    
-                    // مطابقة المفاتيح المكتوبة بملف الـ plist الخاص بك
+                    var currentKey = new ObjC.Object(args).toString();
                     this.isTargetKey = (currentKey === "restrictWeb" || 
                                         currentKey === "useContentFilter" || 
                                         currentKey === "whitelistEnabled" ||
@@ -24,18 +22,16 @@ if (ObjC.available) {
                 },
                 onLeave: function (retval) {
                     if (this.isTargetKey) {
-                        retval.replace(ptr("0x0")); // إجبار القيمة أن تكون false دائماً لتخطي الحظر
+                        retval.replace(ptr("0x0")); // إرجاع false وتعطيل الحظر
                     }
                 }
             });
 
-            console.log("[Cyanide] تم تفعيل أداة تخطي قيود الويب والنظام بنجاح!");
+            console.log("[Cyanide] تم تفعيل أداة تخطي قيود الويب بنجاح لمستودع yaser275!");
         } else {
             console.log("[Cyanide] تعذر العثور على كلاس القيود MCProfileConnection");
         }
     } catch (err) {
         console.log("[Cyanide] خطأ أثناء تشغيل الأداة: " + err);
     }
-} else {
-    console.log("[Cyanide] بيئة عمل الـ Objective-C غير متاحة حالياً.");
 }
